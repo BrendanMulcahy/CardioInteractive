@@ -30,6 +30,8 @@ public class SceneManager : MonoBehaviour {
     private int indexOfButton;
     private Vector2 startPosition;
     public LineRenderer lineRenderer;
+
+    private float timeElapsed = 0;
     
 	// Use this for initialization
 	void Start () {
@@ -40,7 +42,8 @@ public class SceneManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        timeElapsed += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space) || timeElapsed > 1)
         {
             var clone = Instantiate(redCell, spawnPointBottomLeft.position, Quaternion.LookRotation(new Vector3(1f, 0f, 0f))) as Transform;
             clone.parent = this.transform;
@@ -50,6 +53,7 @@ public class SceneManager : MonoBehaviour {
 
             clone = Instantiate(blueCell, spawnPointTopRight.position, Quaternion.LookRotation(new Vector3(1f, 0f, 0f))) as Transform;
             clone.parent = this.transform;
+            timeElapsed = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Z))

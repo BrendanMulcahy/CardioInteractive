@@ -34,8 +34,16 @@ public class Movement : MonoBehaviour {
         Vector3 parallelToWall = Vector3.Cross(collisionNormal, Vector3.forward);
         Vector3 perpComponent = collisionNormal * Vector3.Dot(velocity, collisionNormal) * -1;
         Vector3 paraComponent = parallelToWall.normalized * Vector3.Dot(velocity, parallelToWall);
+        var spd = velocity.magnitude;
         velocity = new Vector3(perpComponent.x + paraComponent.x, perpComponent.y + paraComponent.y, 0f);
-        velocity = velocity.normalized * speed;
+        if (hasEntered)
+        {
+            velocity = velocity.normalized * spd / 5;
+        }
+        else
+        {
+            velocity = velocity.normalized * speed;
+        }
     }
 
     void OnTriggerEnter(Collider other)

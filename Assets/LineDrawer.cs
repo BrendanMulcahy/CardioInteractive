@@ -21,7 +21,7 @@ public class LineDrawer : MonoBehaviour {
             go.transform.parent = this.transform;
             go.AddComponent<LineRenderer>();
             lineRenderers[i] = go.GetComponent<LineRenderer>();
-            lineRenderers[i].SetWidth(0.1f, 0.1f);
+            lineRenderers[i].SetWidth(0.1f, 0.01f);
             lineRenderers[i].material = lineColor;
         }
 
