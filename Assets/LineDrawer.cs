@@ -7,6 +7,7 @@ public class LineDrawer : MonoBehaviour {
 
     public LineRenderer[] lineRenderers;
     public Material lineColor;
+    public bool drawLines = false;
 
 	// Use this for initialization
 	void Start () {
@@ -33,8 +34,11 @@ public class LineDrawer : MonoBehaviour {
             for (int j = 0; j < SceneManager.Instance.gridY; j++)
             {
                 SceneManager.Instance.vectorStart[index] = new Vector2(x, y);
-                LineDrawer.Instance.lineRenderers[index].SetPosition(0, Camera.main.ScreenToWorldPoint(new Vector3(x, Screen.height - y, 10f)));
-                LineDrawer.Instance.lineRenderers[index].SetPosition(1, Camera.main.ScreenToWorldPoint(new Vector3(SceneManager.Instance.vectorfield[index].x, Screen.height - SceneManager.Instance.vectorfield[index].y, 10)));
+                if (drawLines)
+                {
+                    LineDrawer.Instance.lineRenderers[index].SetPosition(0, Camera.main.ScreenToWorldPoint(new Vector3(x, Screen.height - y, 10f)));
+                    LineDrawer.Instance.lineRenderers[index].SetPosition(1, Camera.main.ScreenToWorldPoint(new Vector3(SceneManager.Instance.vectorfield[index].x, Screen.height - SceneManager.Instance.vectorfield[index].y, 10)));
+                }
                 x += Screen.width / SceneManager.Instance.gridY;
                 index++;
             }

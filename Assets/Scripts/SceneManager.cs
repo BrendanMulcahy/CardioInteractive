@@ -32,6 +32,7 @@ public class SceneManager : MonoBehaviour {
     public LineRenderer lineRenderer;
 
     private float timeElapsed = 0;
+    private float timeInterval = 1;
     
 	// Use this for initialization
 	void Start () {
@@ -43,7 +44,7 @@ public class SceneManager : MonoBehaviour {
     void Update()
     {
         timeElapsed += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space) || timeElapsed > 1)
+        if (Input.GetKeyDown(KeyCode.Space) || timeElapsed > timeInterval)
         {
             var clone = Instantiate(redCell, spawnPointBottomLeft.position, Quaternion.LookRotation(new Vector3(1f, 0f, 0f))) as Transform;
             clone.parent = this.transform;
@@ -54,6 +55,7 @@ public class SceneManager : MonoBehaviour {
             clone = Instantiate(blueCell, spawnPointTopRight.position, Quaternion.LookRotation(new Vector3(1f, 0f, 0f))) as Transform;
             clone.parent = this.transform;
             timeElapsed = 0;
+            timeInterval = Random.RandomRange(0.5f, 1.5f);
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
