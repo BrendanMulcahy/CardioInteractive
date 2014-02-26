@@ -4,8 +4,10 @@ using System.Collections;
 public class Movement : MonoBehaviour {
 
     public float speed = 5;
+    public float accel = 5;
     private Vector3 velocity;
     private bool hasEntered = false;
+    private Rect toDraw;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,11 @@ public class Movement : MonoBehaviour {
 	void Update () {
         UpdateMovement();
 	}
+
+    void OnGUI()
+    {
+
+    }
 
     void OnCollisionEnter(Collision collisionInfo)
     {
@@ -52,8 +59,39 @@ public class Movement : MonoBehaviour {
 
     private void UpdateMovement()
     {
+        Vector3 acceleration = GetAcceleration();
+        velocity += acceleration * accel * Time.deltaTime;
+
         transform.position = new Vector3(transform.position.x + velocity.x * Time.deltaTime,
                                          transform.position.y + velocity.y * Time.deltaTime,
                                          0f);
+    }
+
+    private Vector3 GetAcceleration()
+    {
+        float x = 0;
+        float y = 0;
+        float w = Screen.width / SceneManager.Instance.gridY;
+        float h = Screen.height / SceneManager.Instance.gridX;
+        int index = 0;
+
+        for (int i = 0; i < SceneManager.Instance.gridX; i++)
+        {
+            for (int j = 0; j < SceneManager.Instance.gridY; j++)
+            {
+                Vector3 temp = Camera.main.WorldToScreenPoint(transform.position);
+                if (new Rect(x, y, w, h).Contains(new Vector3(temp.x, Screen.height - temp.y, 0))) {
+                    toDraw = new Rect(x, y, w, h);
+                    return new Vector3(SceneManager.Instance.vectorfield[index].x - SceneManager.Instance.vectorStart[index].x, -(SceneManager.Instance.vectorfield[index].y - SceneManager.Instance.vectorStart[index].y), 0).normalized;
+                }
+                x += w;
+                index++;
+            }
+
+            x = 0;
+            y += h;
+        }
+
+        return new Vector3(0, 0, 0);
     }
 }
