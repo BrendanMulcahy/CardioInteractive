@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderers: []
   lineColor: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  drawLines: 1
+  drawLines: 0
 --- !u!4 &184912946
 Transform:
   m_ObjectHideFlags: 0
