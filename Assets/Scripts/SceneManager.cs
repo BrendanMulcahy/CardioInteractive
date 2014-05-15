@@ -55,7 +55,7 @@ public class SceneManager : MonoBehaviour {
             clone = Instantiate(blueCell, spawnPointTopRight.position, Quaternion.LookRotation(new Vector3(1f, 0f, 0f))) as Transform;
             clone.parent = this.transform;
             timeElapsed = 0;
-            timeInterval = Random.RandomRange(0.5f, 1.5f);
+            timeInterval = Random.Range(0.5f, 1.5f);
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
