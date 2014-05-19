@@ -17,12 +17,17 @@ public class FirstPersonCamera : MonoBehaviour
     void Start()
     {
         speed = normalSpeed;
-        Screen.showCursor = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Toggle cursor
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Screen.showCursor = !Screen.showCursor;
+        }
+
         // Go faster when shift is held
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
@@ -36,9 +41,12 @@ public class FirstPersonCamera : MonoBehaviour
         }
 
         // Rotate camera
-        rotationX += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
-        rotationY += Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime;
-        rotationY = Mathf.Clamp(rotationY, -90, 90);
+        if (Input.GetMouseButton(1))
+        {
+            rotationX += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+            rotationY += Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime;
+            rotationY = Mathf.Clamp(rotationY, -90, 90);
+        }
 
         transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
         transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
@@ -62,33 +70,16 @@ public class FirstPersonCamera : MonoBehaviour
         }
 
         // Stop movement
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            velocity = Vector3.zero;
-        }
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            velocity = Vector3.zero;
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            velocity = Vector3.zero;
-        }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.W) ||
+            Input.GetKeyUp(KeyCode.A) ||
+            Input.GetKeyUp(KeyCode.S) ||
+            Input.GetKeyUp(KeyCode.D))
         {
             velocity = Vector3.zero;
         }
 
         // Update position based on velocity
         rigidbody.velocity = velocity;
-
-        if (!Input.GetKey(KeyCode.W) &&
-            !Input.GetKey(KeyCode.A) &&
-            !Input.GetKey(KeyCode.S) &&
-            !Input.GetKey(KeyCode.D))
-        {
-            rigidbody.velocity = Vector3.zero;
-        }
         rigidbody.angularVelocity = Vector3.zero;
     }
 
