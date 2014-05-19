@@ -82,16 +82,4 @@ public class FirstPersonCamera : MonoBehaviour
         rigidbody.velocity = velocity;
         rigidbody.angularVelocity = Vector3.zero;
     }
-
-    void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Entered trigger!");
-        //transform.Translate(-currentTranslation);
-        //velocity = Vector3.zero;
-    }
-
-    void OnCollisionExit(Collision other)
-    {
-        Debug.Log("Exited trigger!");
-    }
 }
